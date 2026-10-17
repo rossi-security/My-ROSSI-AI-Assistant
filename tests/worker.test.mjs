@@ -7,6 +7,9 @@ const request=(path,method='GET')=>worker.fetch(new Request(`https://rossi.examp
 test('serves the offline app, modules, service worker, and install icons',async()=>{
   const home=await request('/');assert.equal(home.status,200);
   const html=await home.text();assert.match(html,/Independent|without another AI service/);
+  const app=await (await request('/app.js')).text(),serviceWorker=await (await request('/sw.js')).text();
+  const linkedAssets=[...html.matchAll(/(?:href|src)="\.\/([^"?]+\.(?:css|js)\?v=\d+)"/g),...app.matchAll(/from '\.\/([^']+)'/g)].map(match=>match[1]);
+  for(const asset of linkedAssets)assert.ok(serviceWorker.includes(`'./${asset}'`),`Offline cache is missing ${asset}`);
   for(const path of ['/app.js','/engine.js','/studio.js','/sw.js']){const response=await request(path);assert.equal(response.status,200,path);assert.match(response.headers.get('content-type'),/javascript/);}
   for(const path of ['/icon-192.png','/icon-512.png']){const response=await request(path);assert.equal(response.status,200,path);assert.equal(response.headers.get('content-type'),'image/png');const bytes=new Uint8Array(await response.arrayBuffer());assert.deepEqual([...bytes.slice(0,8)],[137,80,78,71,13,10,26,10]);}
 });
