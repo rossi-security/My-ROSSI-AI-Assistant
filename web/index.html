@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10101e">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="Rossi is your space to think, learn, code and create.">
+  <meta name="description" content="Rossi is your independent offline space to think, learn, code and create.">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./styles.css?v=3">
+  <link rel="stylesheet" href="./styles.css?v=5">
   <title>Rossi — your space to think</title>
-  <script type="module" src="./app.js?v=5"></script>
+  <script type="module" src="./app.js?v=7"></script>
 </head>
 <body>
   <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -34,6 +35,10 @@
     <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v11m-4-4 4 4 4-4M5 17v3h14v-3"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></symbol>
+    <symbol id="i-atom" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v17M5 20h14M4 7h16M6 7l-3 7h6L6 7Zm12 0-3 7h6l-3-7Z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m4 17 5-5 3 3 3-4 5 6"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="m17 10 4-3v10l-4-3"/></symbol>
   </svg>
 
   <a class="skip-link" href="#prompt-input">Skip to message</a>
@@ -60,9 +65,13 @@
         <button class="mode-button" type="button" data-mode="design" aria-pressed="false"><span class="mode-icon mode-icon--design"><svg class="icon"><use href="#i-design"></use></svg></span><span>Design</span></button>
         <button class="mode-button" type="button" data-mode="fitness" aria-pressed="false"><span class="mode-icon mode-icon--fitness"><svg class="icon"><use href="#i-fitness"></use></svg></span><span>Fitness</span></button>
         <button class="mode-button" type="button" data-mode="support" aria-pressed="false"><span class="mode-icon mode-icon--support"><svg class="icon"><use href="#i-heart"></use></svg></span><span>Support</span></button>
-        <button class="mode-button" type="button" data-mode="reason" aria-pressed="false"><span class="mode-icon mode-icon--think"><svg class="icon"><use href="#i-think"></use></svg></span><span>Think</span></button>
+        <button class="mode-button" type="button" data-mode="reason" aria-pressed="false"><span class="mode-icon mode-icon--think"><svg class="icon"><use href="#i-think"></use></svg></span><span>Reason</span></button>
+        <button class="mode-button" type="button" data-mode="decide" aria-pressed="false"><span class="mode-icon mode-icon--think"><svg class="icon"><use href="#i-scale"></use></svg></span><span>Decide</span></button>
         <button class="mode-button" type="button" data-mode="math" aria-pressed="false"><span class="mode-icon mode-icon--math"><svg class="icon"><use href="#i-math"></use></svg></span><span>Maths</span></button>
+        <button class="mode-button" type="button" data-mode="chemistry" aria-pressed="false"><span class="mode-icon mode-icon--chemistry"><svg class="icon"><use href="#i-atom"></use></svg></span><span>Chemistry</span></button>
+        <button class="mode-button" type="button" data-mode="physics" aria-pressed="false"><span class="mode-icon mode-icon--physics"><svg class="icon"><use href="#i-atom"></use></svg></span><span>Physics</span></button>
         <button class="mode-button" type="button" data-mode="ideas" aria-pressed="false"><span class="mode-icon mode-icon--ideas"><svg class="icon"><use href="#i-idea"></use></svg></span><span>Ideas</span></button>
+        <button class="mode-button" type="button" data-mode="imagine" aria-pressed="false"><span class="mode-icon mode-icon--ideas"><svg class="icon"><use href="#i-spark"></use></svg></span><span>Imagine</span></button>
       </nav>
 
       <div class="sidebar-section-title history-heading"><span>RECENT CHATS</span><span class="section-line"></span><button class="icon-button clear-history" id="clear-history" type="button" aria-label="Delete conversation history" title="Delete conversation history"><svg class="icon"><use href="#i-trash"></use></svg></button></div>
@@ -83,7 +92,8 @@
           <div class="header-title"><span>YOUR WORKSPACE</span><strong>Talk to Rossi <span aria-hidden="true">✳</span></strong></div>
         </div>
         <div class="header-actions">
-          <div class="status-pill" role="status" aria-live="polite"><span class="status-dot" id="status-dot" data-status="idle"></span><span id="status-label">Model not loaded</span></div>
+          <div class="status-pill" role="status" aria-live="polite"><span class="status-dot" id="status-dot" data-status="ready"></span><span id="status-label">Offline engine ready</span></div>
+          <button class="studio-open" id="open-studio" type="button" aria-label="Open image and video studio"><svg class="icon"><use href="#i-image"></use></svg><span>Create</span></button>
           <label class="language-picker" title="Response language">
             <span class="sr-only">Response language</span><svg class="icon"><use href="#i-globe"></use></svg>
             <select id="language-select" aria-label="Response language"><option value="auto">Auto language</option><option value="English">English</option><option value="Tamil">தமிழ்</option><option value="Tanglish">Tanglish</option></select>
@@ -102,7 +112,7 @@
             </div>
             <div class="welcome-kicker"><span class="kicker-line"></span> A LITTLE SPACE FOR BIG IDEAS <span class="kicker-line"></span></div>
             <h1 id="welcome-title">Hi, I’m <span>Rossi.</span><br>What’s on your mind?</h1>
-            <p class="welcome-description">Let’s turn questions into possibilities, one conversation at a time.</p>
+            <p class="welcome-description">Think, learn and create on your device, without another AI service.</p>
             <p class="welcome-languages">English <span>·</span> தமிழ் <span>·</span> Tanglish</p>
 
             <div class="suggestions-label"><span>NOT SURE WHERE TO START?</span><span>TRY ONE OF THESE <span aria-hidden="true">↘</span></span></div>
@@ -122,6 +132,14 @@
               <button class="suggestion-card suggestion-card--blue" type="button" data-prompt="Help me think through a difficult decision by asking a few useful questions.">
                 <span class="suggestion-top"><span class="suggestion-icon"><svg class="icon"><use href="#i-think"></use></svg></span><span class="suggestion-arrow" aria-hidden="true">↗</span></span>
                 <strong>Think it through</strong><span>Make your next step clearer</span>
+              </button>
+              <button class="suggestion-card suggestion-card--lavender" type="button" data-prompt="Calculate the molar mass of H2O and show every step.">
+                <span class="suggestion-top"><span class="suggestion-icon"><svg class="icon"><use href="#i-atom"></use></svg></span><span class="suggestion-arrow" aria-hidden="true">↗</span></span>
+                <strong>Explore science</strong><span>Chemistry and physics tools</span>
+              </button>
+              <button class="suggestion-card suggestion-card--peach" type="button" data-studio="image">
+                <span class="suggestion-top"><span class="suggestion-icon"><svg class="icon"><use href="#i-image"></use></svg></span><span class="suggestion-arrow" aria-hidden="true">↗</span></span>
+                <strong>Create media</strong><span>Make art or an animated clip</span>
               </button>
             </div>
           </section>
@@ -149,29 +167,33 @@
   </div>
 
   <dialog class="settings-dialog" id="settings-dialog" aria-labelledby="settings-title">
-    <div class="dialog-header"><div><span class="dialog-eyebrow">YOUR ROSSI</span><h2 id="settings-title">Make it yours<span>.</span></h2><p>Choose how Rossi runs and where your messages go.</p></div><button class="icon-button close-settings" id="close-settings" type="button" aria-label="Close settings"><svg class="icon"><use href="#i-close"></use></svg></button></div>
+    <div class="dialog-header"><div><span class="dialog-eyebrow">YOUR ROSSI</span><h2 id="settings-title">Make it yours<span>.</span></h2><p>Your independent, installable thinking space.</p></div><button class="icon-button close-settings" id="close-settings" type="button" aria-label="Close settings"><svg class="icon"><use href="#i-close"></use></svg></button></div>
     <div class="dialog-body">
       <section class="settings-section" aria-labelledby="engine-title">
-        <div class="settings-section-heading"><span class="settings-icon settings-icon--purple"><svg class="icon"><use href="#i-think"></use></svg></span><div><h3 id="engine-title">Choose your AI</h3><p>Switch between cloud and on-device answers.</p></div></div>
-        <label class="field-label" for="engine-select">Response source</label>
-        <div class="select-field"><select id="engine-select"><option value="auto">Automatic · cloud when connected</option><option value="cloud">Cloud AI</option><option value="local">Local model on this device</option></select><svg class="icon" aria-hidden="true"><use href="#i-chevron"></use></svg></div>
-        <p class="field-note">Cloud replies need active OpenAI API billing. Local replies need a one-time model download and compatible WebGPU hardware.</p>
+        <div class="settings-section-heading"><span class="settings-icon settings-icon--purple"><svg class="icon"><use href="#i-think"></use></svg></span><div><h3 id="engine-title">Offline by design</h3><p>Rossi answers with built-in logic and knowledge.</p></div></div>
+        <p class="field-note">Your prompts are processed on this device. No OpenAI API, downloaded language model, custom backend or other AI connection is used. This focused engine can calculate and guide within its built-in coverage; it is not a general neural model.</p>
       </section>
-      <section class="settings-section" aria-labelledby="local-model-title">
-        <div class="settings-section-heading"><span class="settings-icon settings-icon--purple"><svg class="icon"><use href="#i-spark"></use></svg></span><div><h3 id="local-model-title">Run on this device</h3><p>Download a small model to use in your browser.</p></div></div>
-        <label class="field-label" for="model-select">Local model</label>
-        <div class="select-field"><select id="model-select"><option value="Qwen2.5-1.5B-Instruct-q4f16_1-MLC">Rossi Local · recommended</option><option value="Qwen2.5-1.5B-Instruct-q4f32_1-MLC">Rossi Local · compatible GPU</option><option value="Qwen2.5-0.5B-Instruct-q4f32_1-MLC">Rossi Local · smaller model</option></select><svg class="icon" aria-hidden="true"><use href="#i-chevron"></use></svg></div>
-        <p class="field-note">The first download is about 880 MB for the recommended model. A compatible WebGPU browser and enough device memory are required. Smaller models may give less capable answers.</p>
-        <div class="model-load-row"><button class="primary-button" id="load-model" type="button"><svg class="icon"><use href="#i-download"></use></svg> Download &amp; start model</button><span class="model-status" id="model-status" role="status">Not loaded yet</span></div>
-        <progress class="model-progress" id="model-progress" value="0" max="100" aria-label="Model download progress"></progress>
+      <section class="settings-section" aria-labelledby="install-title">
+        <div class="settings-section-heading"><span class="settings-icon settings-icon--purple"><svg class="icon"><use href="#i-download"></use></svg></span><div><h3 id="install-title">Install Rossi as an app</h3><p>The app opens the same Rossi website and works offline after its files are cached.</p></div></div>
+        <button class="primary-button" id="install-app" type="button"><svg class="icon"><use href="#i-download"></use></svg> Install Rossi</button>
+        <p class="field-note">If the install prompt is unavailable, use your browser’s Install app option. On iPhone, choose Share → Add to Home Screen. Chats remain on this device and are not synced between devices.</p>
       </section>
-      <section class="settings-section" aria-labelledby="backend-title">
-        <div class="settings-section-heading"><span class="settings-icon settings-icon--peach"><svg class="icon"><use href="#i-globe"></use></svg></span><div><h3 id="backend-title">Connect a backend <span class="optional">OPTIONAL</span></h3><p>Use a compatible hosted AI service instead.</p></div></div>
-        <label class="field-label" for="backend-url">Backend URL</label>
-        <input class="text-field" id="backend-url" type="url" inputmode="url" autocomplete="url" placeholder="https://your-backend.example.com" aria-describedby="backend-note">
-        <p class="field-note" id="backend-note">Leave blank for Rossi’s cloud AI when available, or the local model. A custom backend receives the messages you send, so choose one you trust.</p>
+      <section class="settings-section" aria-labelledby="studio-title">
+        <div class="settings-section-heading"><span class="settings-icon settings-icon--peach"><svg class="icon"><use href="#i-image"></use></svg></span><div><h3 id="studio-title">Create on your device</h3><p>Make original vector artwork and a short, silent animated video.</p></div></div>
+        <p class="field-note">Studio uses procedural drawing, so it cannot produce photorealistic scenes or arbitrary cinematic footage. Video export needs a browser with canvas recording support.</p>
       </section>
       <div class="settings-note"><svg class="icon"><use href="#i-lock"></use></svg><p>Chats are saved in this browser. Rossi’s responses may be wrong; fitness and emotional guidance are not medical or emergency care.</p></div>
+    </div>
+  </dialog>
+  <dialog class="settings-dialog studio-dialog" id="studio-dialog" aria-labelledby="studio-title-main">
+    <div class="dialog-header"><div><span class="dialog-eyebrow">ROSSI CREATIVE STUDIO</span><h2 id="studio-title-main">Create something<span>.</span></h2><p>Original art and motion, drawn on your device.</p></div><button class="icon-button close-settings" id="studio-close" type="button" aria-label="Close studio"><svg class="icon"><use href="#i-close"></use></svg></button></div>
+    <div class="dialog-body">
+      <label class="field-label" for="studio-prompt">Describe your image or short video</label>
+      <textarea class="studio-prompt" id="studio-prompt" rows="3" maxlength="140" placeholder="A premium rose in a violet night garden…"></textarea>
+      <div class="studio-actions"><button class="primary-button" id="studio-image" type="button"><svg class="icon"><use href="#i-image"></use></svg> Generate image</button><button class="primary-button" id="studio-video" type="button"><svg class="icon"><use href="#i-video"></use></svg> Create video</button><button class="primary-button studio-cancel" id="studio-cancel" type="button" hidden>Cancel</button></div>
+      <p class="field-note" id="studio-status" role="status">Choose image for SVG art or video for a short animated clip.</p>
+      <div class="studio-preview" id="studio-preview" aria-live="polite"><span>Your creation will appear here</span></div>
+      <a class="primary-button studio-download" id="studio-download" href="#" download hidden>Download creation</a>
     </div>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
