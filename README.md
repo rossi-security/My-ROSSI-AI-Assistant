@@ -2,6 +2,8 @@
 
 Rossi is an installable web app for focused thinking and creation. It works without an OpenAI API, another AI service, a downloaded model, or a user account. Chat prompts and generated media stay in the browser. The interface supports English, Tamil, and Tanglish.
 
+Open the current independent app: **https://rossi-security.github.io/My-ROSSI-AI-Assistant/**. The site redirects to the app in `web/`. The older private Site URL has not been updated with this version.
+
 ## What Rossi can do
 
 - Choose a focus: Code, Design, Fitness, Support, Reason, Decide, Maths, Chemistry, Physics, Ideas, or Imagine. All mode routes a question to a relevant local module.
