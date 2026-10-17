@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Rossi">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34306e"/><stop offset=".55" stop-color="#7664dd"/><stop offset="1" stop-color="#d293d6"/></linearGradient>
+    <linearGradient id="r" x1=".05" y1="0" x2=".9" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e6dbff"/></linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="32" fill="url(#bg)"/>
+  <circle cx="64" cy="64" r="44" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="1.4"/>
+  <path d="M43 89V39h25.5c15.2 0 23.5 7.5 23.5 20 0 9.4-5.4 16-14.6 18.4L94 89H78L63.8 78H57v11H43Zm14-23h11.5c6.7 0 10.3-2.5 10.3-7.2S75.2 51.5 68.5 51.5H57V66Z" fill="url(#r)"/>
+  <circle cx="101" cy="33" r="7" fill="#baf4e4"/>
+  <path d="M101 21v5m0 14v5m-12-12h5m14 0h5" stroke="#baf4e4" stroke-width="2" stroke-linecap="round"/>
+</svg>
