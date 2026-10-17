@@ -1,4 +1,4 @@
-import { MODES, replyTo } from './engine.js?v=2';
+import { MODES, replyTo } from './engine.js?v=3';
 import { makeSvg, recordClip } from './studio.js?v=2';
 
 const el = (selector) => document.querySelector(selector);
@@ -57,6 +57,8 @@ function syncSidebarAccess(){
   const hidden=mobile&&!open;
   el('#sidebar').inert=hidden;
   el('#sidebar').setAttribute('aria-hidden',String(hidden));
+  el('#main-content').inert=mobile&&open;
+  el('#main-content').setAttribute('aria-hidden',String(mobile&&open));
   el('#sidebar-backdrop').inert=!mobile||!open;
   el('#sidebar-backdrop').setAttribute('aria-hidden',String(!mobile||!open));
 }
@@ -65,8 +67,8 @@ function closeSidebar() {
   el('#sidebar').classList.remove('is-open');
   el('#sidebar-backdrop').classList.remove('is-open');
   el('#sidebar-toggle').setAttribute('aria-expanded', 'false');
-  if(hadFocus&&matchMedia('(max-width:760px)').matches)el('#sidebar-toggle').focus();
   syncSidebarAccess();
+  if(hadFocus&&matchMedia('(max-width:760px)').matches)el('#sidebar-toggle').focus();
 }
 function toggleSidebar() {
   const open = !el('#sidebar').classList.contains('is-open');

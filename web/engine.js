@@ -5,7 +5,7 @@ export const MODES = {
   physics: 'Physics', ideas: 'Ideas', imagine: 'Imagine'
 };
 
-const CRISIS = /\b(kill myself|suicide|end my life|hurt myself|self harm|self-harm|i want to die|take my life|tharkolai|saaganum|saaga\s*poren|saagaporen|seththu\s*poganum|sethu\s*poganum|uyira?\s*vidanum)\b|(?:தற்கொலை|உயிரை\s*(?:மாய்த்து|விட)|சாக\s*வேண்டும்|சாகணும்|செத்துப்\s*போக)/i;
+const CRISIS = /\b(kill myself|suicid(?:e|al)|end my life|end it all|end it tonight|hurt myself|cut myself|harm myself|self[ -]?harm|i want to die|take my life|tharkolai|saaganum|saaga\s*poren|saagaporen|seththu\s*poganum|sethu\s*poganum|uyira?\s*vidanum)\b|(?:தற்கொலை|உயிரை\s*(?:மாய்த்து|விட)|சாக\s*வேண்டும்|சாகணும்|செத்துப்\s*போக)/i;
 const ATOMS = {H:1.008,He:4.003,Li:6.94,Be:9.012,B:10.81,C:12.011,N:14.007,O:15.999,F:18.998,Ne:20.180,Na:22.990,Mg:24.305,Al:26.982,Si:28.085,P:30.974,S:32.06,Cl:35.45,Ar:39.948,K:39.098,Ca:40.078,Fe:55.845,Cu:63.546,Zn:65.38,Br:79.904,Ag:107.868,I:126.904,Au:196.967};
 const has = (text, words) => words.some(word => text.includes(word));
 const round = number => Number.parseFloat(Number(number).toPrecision(8)).toString();
@@ -53,9 +53,9 @@ function calculate(expression) {
 
 export function arithmeticReply(prompt,language='English') {
   const input=prompt.replace(/×/g,'*').replace(/÷/g,'/').replace(/[−–]/g,'-');
-  const linear=/\b([+-]?\d*\.?\d*)\s*x\s*([+-]\s*\d+(?:\.\d+)?)?\s*=\s*([+-]?\d+(?:\.\d+)?)/i.exec(input);
+  const linear=/(?:^|[^\w.])\s*([+-]?\d*\.?\d*)\s*x\s*([+-]\s*\d+(?:\.\d+)?)?\s*=\s*([+-]?\d+(?:\.\d+)?)/i.exec(input);
   if(linear){const coefficient=linear[1]===''||linear[1]==='+'?1:linear[1]==='-'?-1:Number(linear[1]);const offset=Number((linear[2]||'0').replace(/\s/g,'')),target=Number(linear[3]);if(coefficient===0)return 'The coefficient of x is zero, so this does not determine a unique x.';const answer=(target-offset)/coefficient;return say(language,`Move ${offset} to the other side: ${round(coefficient)}x = ${round(target-offset)}. Divide by ${round(coefficient)}: **x = ${round(answer)}**. Check: ${round(coefficient)} × ${round(answer)} + ${round(offset)} = ${round(target)}.`,`படிகள்: ${round(coefficient)}x = ${round(target-offset)}. ஆகவே **x = ${round(answer)}**. சரிபார்ப்பு: ${round(coefficient)} × ${round(answer)} + ${round(offset)} = ${round(target)}.`,`Steps: ${round(coefficient)}x = ${round(target-offset)}. Appo **x = ${round(answer)}**. Check: ${round(coefficient)} × ${round(answer)} + ${round(offset)} = ${round(target)}.`);}
-  const expression=[...input.matchAll(/[0-9(][0-9().+\-*/^ ]*[0-9)]/g)].map(match=>match[0].trim()).find(candidate=>/[+\-*/^]/.test(candidate));
+  const expression=[...input.matchAll(/(?:^|[^\w.)])\s*([+-]?[0-9(][0-9().+\-*/^ ]*[0-9)])/g)].map(match=>match[1].trim()).find(candidate=>/[+\-*/^]/.test(candidate));
   if(expression){try{const result=calculate(expression);return say(language,`Using order of operations, **${expression} = ${round(result)}**. Parentheses first, then powers, multiplication/division, and addition/subtraction.`,`செயல் வரிசைப்படி **${expression} = ${round(result)}**. முதலில் அடைப்புக்குறி, பிறகு அடுக்கு, பெருக்கல்/வகுத்தல், கூட்டல்/கழித்தல்.`,`Order of operations padi **${expression} = ${round(result)}**. Mudhal-la brackets, appuram powers, multiply/divide, add/subtract.`);}catch{}}
   return say(language,'Send a specific expression such as `2*(3+4)` or a linear equation such as `2x+3=11`. Rossi calculates these locally and shows the steps.','`2*(3+4)` போன்ற கணக்கையோ `2x+3=11` போன்ற சமன்பாட்டையோ அனுப்புங்கள். Rossi அதை இங்கேயே கணக்கிட்டு படிகளை விளக்கும்.','`2*(3+4)` illa `2x+3=11` maathi oru kanakku anuppunga. Rossi inga-ye calculate panni steps sollum.');
 }
@@ -67,6 +67,7 @@ export function molarMass(formula) {
   return {total,parts};
 }
 function chemistry(prompt,language) {
+  if(/[A-Z][a-z]?\d*\([A-Za-z0-9]+\)\d*/.test(prompt))return say(language,'This formula has parentheses, which Rossi’s current molar-mass calculator does not support. I will not calculate only a fragment of it. Try a formula without parentheses, such as H2O or NaCl.','இந்தச் சூத்திரத்தில் அடைப்புக்குறிகள் உள்ளன; Rossi-யின் தற்போதைய மோலார் நிறை கணிப்பான் அதை ஆதரிக்கவில்லை. அதன் ஒரு பகுதியை மட்டும் கணக்கிடமாட்டேன். H2O அல்லது NaCl போன்ற அடைப்புக்குறி இல்லாத சூத்திரத்தை முயலுங்கள்.','Indha formula-la brackets irukku; Rossi-oda current molar mass calculator adha support pannaadhu. Oru part mattum calculate panna maatten. H2O illa NaCl maathi brackets illadha formula try pannunga.');
   const candidate=prompt.match(/\b(?:[A-Z][a-z]?\d*){2,}\b|\bH2O\b|\bCO2\b/);
   const mass=candidate&&molarMass(candidate[0]);
   if(mass)return say(language,`**${candidate[0]} molar mass = ${round(mass.total)} g/mol.**\n${mass.parts.map(part=>'- '+part).join('\n')}\nAdd the atomic contributions. For moles, divide mass in grams by this molar mass.`,`**${candidate[0]} மோலார் நிறை = ${round(mass.total)} g/mol.**\n${mass.parts.map(part=>'- '+part).join('\n')}\nஒவ்வொரு அணுவின் பங்கையும் கூட்டுங்கள். மோல் எண்ணிக்கை = கிராம் / மோலார் நிறை.`,`**${candidate[0]} molar mass = ${round(mass.total)} g/mol.**\n${mass.parts.map(part=>'- '+part).join('\n')}\nOvvoru atom-oda mass-a koottunga. Moles = grams / molar mass.`);
