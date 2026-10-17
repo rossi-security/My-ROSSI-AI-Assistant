@@ -1,41 +1,34 @@
-# Rossi AI Assistant
+# Rossi — Independent Studio
 
-Rossi is a private, responsive chat app for learning to code, designing interfaces and animations, planning general fitness, talking through feelings, making decisions, explaining maths and brainstorming ideas. It supports English, Tamil and Tanglish. Its icon and interface were created for this project.
+Rossi is an installable web app for focused thinking and creation. It works without an OpenAI API, another AI service, a downloaded model, or a user account. Chat prompts and generated media stay in the browser. The interface supports English, Tamil, and Tanglish.
 
-## What works
+## What Rossi can do
 
-- **Cloud AI:** a server-side `/api/chat` route calls the OpenAI Responses API. The API key remains in the hosting environment and is never sent to the browser or committed to Git.
-- **Local AI option:** a WebGPU-capable browser can download a pretrained Qwen model and run it on the device. The first download is large and local answers may be less capable.
-- **Conversation tools:** mode and language selectors, browser-local chat history, delete history, code copying, stop response and mobile navigation.
-- **Safety:** fitness guidance is general, emotional guidance is non-diagnostic, and immediate danger prompts direct the user to local emergency services or nearby human help. The app does not invent hotline numbers.
+- Choose a focus: Code, Design, Fitness, Support, Reason, Decide, Maths, Chemistry, Physics, Ideas, or Imagine. All mode routes a question to a relevant local module.
+- Calculate arithmetic and simple linear equations with steps; calculate molar masses for supported chemical formulas; apply selected physics formulas with units.
+- Give starter code for Python, Java, and HTML/CSS/JavaScript, plus limited curated explanations for other topics.
+- Produce original procedural SVG artwork and short, silent animated video clips in supported browsers. Images and clips are drawn locally. This is not photorealistic text-to-image or cinematic video generation.
+- Install as a Progressive Web App (PWA) from the same website. A service worker caches the interface for offline use; conversations stay in that browser or installed app and do not sync between devices.
 
-The mode instructions tailor a pretrained model. They do not constitute training a new model, guarantee accuracy, or establish that Rossi is better than another assistant.
+Rossi uses deterministic algorithms, curated examples, and a small built-in reference. It is **not** a newly trained general-purpose neural model and will not match a large AI model on arbitrary questions. It states its coverage and asks for a narrower question when needed. Fitness advice is general, emotional support is non-diagnostic, and urgent safety messages direct the user to nearby human help or local emergency services without inventing a number.
 
-## Run locally
+## Run and test locally
 
-Node.js 24 or newer is recommended. Create a private `.env.local` containing `OPENAI_API_KEY`; it is ignored by Git. Then run:
+Node.js 24 or newer is recommended. No API key, environment file, package installation, or account is required.
 
 ```sh
-node scripts/dev.mjs
+npm run check
+npm run dev
 ```
 
-Open `http://127.0.0.1:4173`. Local preview binds to the loopback interface. With no API key, use Settings to start a local model. No key is ever required in browser code.
+Open `http://127.0.0.1:4173`. The local server binds only to the loopback interface. `npm run build` creates the deployable Worker at `dist/server/index.js`.
 
-## Deploy on Sites
+## Install the app
 
-The tracked `.openai/hosting.json` identifies the private Site. Run `node scripts/build.mjs` to create `dist/server/index.js` and deploy the built Worker with Sites. Configure `OPENAI_API_KEY` as a **secret** runtime variable, and optionally set `OPENAI_MODEL` (default `gpt-6.1-sol`). API billing must be active in the selected OpenAI Platform project for cloud replies to work. Keep the Site private while using the project key; a public audience needs additional abuse and cost controls.
+On desktop or Android, open the hosted Rossi website and use the browser's **Install app** command, or press **Install Rossi** in Settings when the browser offers an install prompt. On iPhone, use Safari's **Share → Add to Home Screen**. The app and website use the same source; browser support determines whether video export and offline installation are available.
 
-## Try these prompts
+## Source and privacy
 
-| Focus | Example |
-| --- | --- |
-| Code | “Python-la habit tracker app build panni, run panna steps sollu.” |
-| Java | “Explain Java classes with a small runnable example.” |
-| Web | “Create accessible HTML, CSS and JavaScript for an animated portfolio; support reduced motion.” |
-| Fitness | “Ask about my goals and injuries, then suggest a gentle beginner routine.” |
-| Support | “I’m stressed about an exam. Help me take the next small step.” |
-| Think | “Help me compare two job options and identify what I still need to know.” |
-| Maths | “தமிழில் quadratic equation-ஐ படிப்படியாக விளக்கு.” |
-| Ideas | “Suggest unusual but practical ideas for a student app.” |
+`web/engine.js` contains Rossi's local subject modules; `web/studio.js` draws media; `web/sw.js` caches the PWA; `worker/handler.js` serves static assets only. There is no chat API endpoint or outbound AI call in this version. The tracked `.openai/hosting.json` identifies the existing private Site for deployment and does not contain credentials. Any old `.env.local` file from earlier development is ignored by Git and is not read by the app.
 
-Responses can contain mistakes. For health concerns, seek qualified care; for immediate danger, contact local emergency services or a trusted person nearby.
+Try `2*(3+4)`, `H2O molar mass`, `force for 5 kg at 2 m/s²`, or ask for a Python starter app. Select **Create** for rose artwork or a short animated video. For a wider question, tell Rossi the goal, constraints, and a concrete example.
